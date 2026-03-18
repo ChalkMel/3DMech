@@ -1,0 +1,61 @@
+using UnityEngine;
+
+[RequireComponent(typeof(Rigidbody))]
+public class PlayerMovement : MonoBehaviour
+{
+  [SerializeField] private float speed;
+  [SerializeField] private float jumpForce;
+    
+  [Header("Ground check")]
+  [SerializeField] private Transform groundCheck;
+  [SerializeField] private float groundCheckRadius;
+  [SerializeField] private LayerMask groundCheckMask;
+
+  private Rigidbody _rb;
+  private bool _isGrounded;
+    
+  private void Awake()
+  {
+    _rb = GetComponent<Rigidbody>();
+  }
+
+  private void Update()
+  {
+    CheckGround();
+  }
+
+  private void CheckGround()
+  {
+    _isGrounded = Physics.CheckSphere(
+      groundCheck.position,
+      groundCheckRadius,
+      groundCheckMask);
+    Physics.CheckSphere(groundCheck.position, groundCheckRadius,  groundCheckMask );
+  }
+
+  public void Move(Vector2 movement)
+  {
+    Vector3 direction = new Vector3(movement.x, 0, movement.y);
+
+    direction = transform.TransformDirection(direction);
+    direction.y = 0;
+    direction = direction.normalized;
+
+    Vector3 velocity = direction * speed;
+    velocity.y = _rb.linearVelocity.y;
+    _rb.linearVelocity = velocity;
+  }
+
+  public void Jump()
+  {
+    if (_isGrounded)
+      _rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+  }
+
+#if UNITY_EDITOR
+  private void OnDrawGizmos()
+  {
+    Gizmos.DrawSphere(groundCheck.position, groundCheckRadius);
+  }
+#endif
+}
