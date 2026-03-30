@@ -3,6 +3,7 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody))]
 public class PlayerMovement : MonoBehaviour
 {
+  
   [SerializeField] private float speed;
   [SerializeField] private float jumpForce;
     
