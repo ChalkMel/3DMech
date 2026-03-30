@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Coin : GetPlayerLayer
+public class Coin : MonoBehaviour
 {
   [SerializeField] private int coinValue;
   [SerializeField] private CoinCounter coinCounter;

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class DangerZone : GetPlayerLayer
+public class DangerZone : MonoBehaviour
 {
     [SerializeField] private GameObject boxPrefab;
     [SerializeField] private Transform spawnPoint;
